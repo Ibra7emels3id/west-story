@@ -1,13 +1,21 @@
 import React from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import {
+  Building2,
+  Hotel,
+  Landmark,
+  Briefcase,
+  Store,
+  Sparkles,
+} from "lucide-react";
 
 const locations = [
-  { titleKey: "locations.malls", icon: "🏬" },
-  { titleKey: "locations.resorts", icon: "🏖️" },
-  { titleKey: "locations.spa", icon: "🧖" },
-  { titleKey: "locations.offices", icon: "🏢" },
-  { titleKey: "locations.hotels", icon: "🏨" },
-  { titleKey: "locations.mosques", icon: "🕌" },
+  { titleKey: "locations.malls", Icon: Store },
+  { titleKey: "locations.resorts", Icon: Landmark },
+  { titleKey: "locations.spa", Icon: Sparkles },
+  { titleKey: "locations.offices", Icon: Briefcase },
+  { titleKey: "locations.hotels", Icon: Hotel },
+  { titleKey: "locations.mosques", Icon: Building2 },
 ];
 
 export default function Locations() {
@@ -15,61 +23,69 @@ export default function Locations() {
 
   return (
     <section
-      className="relative py-20 md:py-32 bg-[#FBF7EF] overflow-hidden"
+      id="locations"
       dir={isRTL ? "rtl" : "ltr"}
+      className="relative py-24 md:py-36 bg-[#FBF7EF] overflow-hidden"
     >
-      <div className="absolute -top-32 -right-32 w-80 h-80 bg-[#C0265C]/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 -left-32 w-96 h-96 bg-[#191D2B]/10 rounded-full blur-3xl" />
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#C0265C]/25 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#191D2B]/15 to-transparent" />
 
       <div className="container relative z-10 mx-auto px-4">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <span className="inline-block mb-4 text-sm tracking-[0.25em] uppercase text-[#C0265C] font-bold">
-            {language === "ar" ? "أماكن الاستخدام" : "Where To Use"}
+        <div className="text-center max-w-4xl mx-auto mb-20">
+          <span className="text-[#C0265C] tracking-[0.4em] uppercase text-xs font-medium">
+            {language === "ar" ? "القطاعات المستهدفة" : "Target Industries"}
           </span>
 
-          <h2 className="text-3xl md:text-5xl font-extrabold text-[#191D2B] leading-tight">
-            {t("locations.title")}
+          <h2 className="mt-5 text-4xl md:text-6xl font-light text-[#191D2B] leading-[1.15]">
+            {language === "ar"
+              ? "حلول تعطير تناسب مختلف القطاعات"
+              : "Scent Solutions For Every Industry"}
           </h2>
 
-          <p className="mt-5 text-base md:text-lg text-gray-600 leading-8">
+          <p className="mt-6 text-[#191D2B]/60 leading-8 max-w-2xl mx-auto font-light">
             {language === "ar"
-              ? "حلول عطرية مناسبة للمساحات التجارية والفندقية ومراكز العناية."
-              : "Scent solutions designed for commercial, hospitality, and wellness spaces."}
+              ? "أنظمة تعطير احترافية مصممة للفنادق والمكاتب والمعارض والمساحات التجارية."
+              : "Professional scenting systems designed for hotels, offices, showrooms and commercial spaces."}
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
-          {locations.map((location, index) => (
-            <article
-              key={index}
-              className="group relative min-h-[190px] rounded-[28px] bg-white border border-black/5 shadow-[0_18px_45px_rgba(25,29,43,0.08)] hover:shadow-[0_24px_60px_rgba(25,29,43,0.14)] overflow-hidden transition-all duration-500"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-[#C0265C]/8 via-white to-[#191D2B]/5 opacity-100" />
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 border border-[#191D2B]/10">
+          {locations.map((location, index) => {
+            const Icon = location.Icon;
 
-              <div className="absolute -bottom-12 -right-12 w-28 h-28 rounded-full bg-[#C0265C]/10 blur-2xl group-hover:scale-150 transition-transform duration-700" />
+            return (
+              <article
+                key={index}
+                className="group bg-[#FBF7EF] min-h-[260px] p-8 md:p-10 border-b border-[#191D2B]/10 xl:border-b-0 xl:border-e hover:bg-white transition-all duration-500"
+              >
+                <div className="flex items-center justify-between mb-12">
+                  <span className="text-xs tracking-[0.35em] text-[#191D2B]/30">
+                    0{index + 1}
+                  </span>
 
-              <div className="relative z-10 h-full p-5 flex flex-col items-center justify-center text-center">
-                <div className="w-16 h-16 rounded-2xl bg-[#FBF7EF] shadow-inner flex items-center justify-center text-4xl mb-5 transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-1">
-                  {location.icon}
+                  <Icon
+                    size={30}
+                    strokeWidth={1.3}
+                    className="text-[#191D2B] group-hover:text-[#C0265C] transition-colors duration-300"
+                  />
                 </div>
 
-                <h3 className="text-sm md:text-base font-extrabold text-[#191D2B] leading-relaxed">
+                <h3
+                  className={`text-2xl font-light text-[#191D2B] leading-relaxed ${
+                    isRTL ? "text-right" : "text-left"
+                  }`}
+                >
                   {t(location.titleKey)}
                 </h3>
 
-                <span className="mt-4 w-8 h-[3px] rounded-full bg-[#C0265C] scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-              </div>
-            </article>
-          ))}
-        </div>
-
-        <div className="flex justify-center mt-12">
-          <button
-            type="button"
-            className="rounded-full bg-[#191D2B] text-white px-9 py-4 text-sm md:text-base font-bold shadow-lg hover:bg-[#C0265C] hover:-translate-y-1 transition-all duration-300"
-          >
-            {t("locations.viewAll")}
-          </button>
+                <div
+                  className={`mt-8 h-px w-12 bg-[#C0265C] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ${
+                    isRTL ? "origin-right" : "origin-left"
+                  }`}
+                />
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
