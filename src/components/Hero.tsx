@@ -3,22 +3,40 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const heroImages = {
-    ar: [
-        "/Images/banner_hero/1 A.png",
-        "/Images/banner_hero/2 A.png",
-        "/Images/banner_hero/3 A.png",
-        "/Images/banner_hero/4 A.png",
-    ],
-    en: [
-        "/Images/banner_hero/1 E.png",
-        "/Images/banner_hero/2 E.png",
-        "/Images/banner_hero/3 E.png",
-        "/Images/banner_hero/4 E.png",
-    ],
+    ar: {
+        desktop: [
+            "/Images/banner_hero/1 A.png",
+            "/Images/banner_hero/2 A.png",
+            "/Images/banner_hero/3 A.png",
+            "/Images/banner_hero/4 A.png",
+        ],
+        mobile: [
+            "/public/Images/01.jpg",
+            "/public/Images/A1.jpg",
+            "/public/Images/D1.jpg",
+            "/public/Images/DO1.jpg",
+        ],
+    },
+
+    en: {
+        desktop: [
+            "/Images/banner_hero/1 E.png",
+            "/Images/banner_hero/2 E.png",
+            "/Images/banner_hero/3 E.png",
+            "/Images/banner_hero/4 E.png",
+        ],
+        mobile: [
+            "/public/Images/01.jpg",
+            "/public/Images/A1.jpg",
+            "/public/Images/D1.jpg",
+            "/public/Images/DO1.jpg",
+        ],
+    },
 };
 
 const heroContent = {
     ar: {
+        eyebrow: "West Story Scenting Solutions",
         title: "اصنع لمكانك حضورًا يُتذكر",
         description:
             "حلول احترافية لتعطير المنشآت تبدأ من اختيار الرائحة المناسبة، وتشمل أجهزة التعطير، التركيب، البرمجة، التوريد، والمتابعة الدورية.",
@@ -27,6 +45,7 @@ const heroContent = {
         note: "خبرة في تعطير المنشآت والقطاعات التجارية منذ عام 2010.",
     },
     en: {
+        eyebrow: "West Story Scenting Solutions",
         title: "Create a Presence Your Place Will Be Remembered For",
         description:
             "Professional scenting solutions for businesses, starting from choosing the right fragrance to scent devices, installation, programming, supply, and regular follow-up.",
@@ -39,13 +58,34 @@ const heroContent = {
 export default function Hero() {
     const { language, isRTL } = useLanguage();
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [isMobile, setIsMobile] = useState(false);
 
-    const images = heroImages[language] || heroImages.en;
+    const desktopImages =
+        heroImages[language]?.desktop || heroImages.en.desktop;
+
+    const mobileImages =
+        heroImages[language]?.mobile || heroImages.en.mobile;
+
+    const images = isMobile ? mobileImages : desktopImages;
     const content = heroContent[language] || heroContent.en;
 
     useEffect(() => {
+        const checkScreen = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        checkScreen();
+
+        window.addEventListener("resize", checkScreen);
+
+        return () => {
+            window.removeEventListener("resize", checkScreen);
+        };
+    }, []);
+
+    useEffect(() => {
         setCurrentSlide(0);
-    }, [language]);
+    }, [language, isMobile]);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -69,33 +109,38 @@ export default function Hero() {
         <section
             id="home"
             dir={isRTL ? "rtl" : "ltr"}
-            className="relative w-full h-screen overflow-hidden bg-black"
-            >
-            {images.map((image, index) => (
+            className="relative w-full h-[100dvh] overflow-hidden bg-black"
+        >
+            {desktopImages.map((image, index) => (
                 <div
                     key={`${language}-${index}`}
                     className={`absolute inset-0 transition-opacity duration-1000 ${
                         index === currentSlide ? "opacity-100" : "opacity-0"
                     }`}
                 >
-                    <img
-                        src={image}
-                        alt={`West Story Hero ${index + 1}`}
-                        className="w-full h-full object-cover"
-                        draggable="false"
-                    />
+                    <picture>
+                        <source
+                            media="(max-width: 767px)"
+                            srcSet={mobileImages[index]}
+                        />
+
+                        <img
+                            src={image}
+                            alt={`West Story Hero ${index + 1}`}
+                            className="w-full h-full object-cover"
+                            draggable="false"
+                        />
+                    </picture>
                 </div>
             ))}
 
-            {/* Overlay */}
             <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/25 via-black/10 to-transparent" />
             <div className="absolute inset-0 z-10 bg-black/5" />
 
-            {/* Content */}
-            <div className="relative z-20 container mx-auto px-4 min-h-screen flex items-center pt-20">
+            <div className="relative z-20 container mx-auto px-4 h-full flex items-center pt-20 md:pt-20">
                 <div className="max-w-3xl text-white">
                     <span className="inline-flex mb-5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 px-5 py-2 text-sm font-medium text-white/90">
-                        West Story Scenting Solutions
+                        {content.eyebrow}
                     </span>
 
                     <h1 className="text-4xl md:text-6xl xl:text-7xl font-bold leading-tight mb-6">
@@ -128,11 +173,10 @@ export default function Hero() {
                 </div>
             </div>
 
-            {/* Arrows */}
             <button
                 type="button"
                 onClick={prevSlide}
-                className={`absolute top-1/2 z-30 -translate-y-1/2 w-12 h-12 rounded-full bg-white/80 text-[#191D2B] shadow-lg hover:bg-[#C0265C] hover:text-white transition ${
+                className={`absolute top-1/2 z-30 -translate-y-1/2 w-12 h-12 hidden md:block rounded-full bg-white/80 text-[#191D2B] shadow-lg hover:bg-[#C0265C] hover:text-white transition ${
                     isRTL ? "right-5 md:right-10" : "left-5 md:left-10"
                 }`}
             >
@@ -142,14 +186,13 @@ export default function Hero() {
             <button
                 type="button"
                 onClick={nextSlide}
-                className={`absolute top-1/2 z-30 -translate-y-1/2 w-12 h-12 rounded-full bg-white/80 text-[#191D2B] shadow-lg hover:bg-[#C0265C] hover:text-white transition ${
+                className={`absolute top-1/2 z-30 -translate-y-1/2 w-12 h-12 hidden md:block rounded-full bg-white/80 text-[#191D2B] shadow-lg hover:bg-[#C0265C] hover:text-white transition ${
                     isRTL ? "left-5 md:left-10" : "right-5 md:right-10"
                 }`}
             >
                 <ChevronRight size={26} className="mx-auto" />
             </button>
 
-            {/* Dots */}
             <div className="absolute bottom-8 left-1/2 z-30 flex -translate-x-1/2 gap-3">
                 {images.map((_, index) => (
                     <button
