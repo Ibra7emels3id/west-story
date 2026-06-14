@@ -4,16 +4,16 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const heroImages = {
     ar: [
-        "/public/Images/banner_hero/1 A.png",
-        "/public/Images/banner_hero/2 A.png",
-        "/public/Images/banner_hero/3 A.png",
-        "/public/Images/banner_hero/4 A.png",
+        "/Images/banner_hero/1 A.png",
+        "/Images/banner_hero/2 A.png",
+        "/Images/banner_hero/3 A.png",
+        "/Images/banner_hero/4 A.png",
     ],
     en: [
-        "/public/Images/banner_hero/1 E.png",
-        "/public/Images/banner_hero/2 E.png",
-        "/public/Images/banner_hero/3 E.png",
-        "/public/Images/banner_hero/4 E.png",
+        "/Images/banner_hero/1 E.png",
+        "/Images/banner_hero/2 E.png",
+        "/Images/banner_hero/3 E.png",
+        "/Images/banner_hero/4 E.png",
     ],
 };
 
