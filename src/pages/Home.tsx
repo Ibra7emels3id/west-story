@@ -7,9 +7,18 @@ import Locations from '@/components/Locations';
 import BeforeAfter from '@/components/BeforeAfter';
 import Testimonials from '@/components/Testimonials';
 import BestSellers from '@/components/BestSellers';
-import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import Products from '@/components/Products';
+import Clients from '../components/Clients';
+import Solutions from '../components/Solutions';
+import Sectors from '../components/Sectors';
+import DevicesScents from '../components/DevicesScents';
+import SignatureScent from '../components/SignatureScent';
+import HowWeWork from '../components/HowWeWork';
+import WhyWestStory from '../components/WhyWestStory';
+import OurWork from '../components/OurWork';
+import FAQ from '../components/FAQ';
+import Contact from '../components/Contact';
 
 export default function Home() {
   return (
@@ -17,13 +26,23 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <Features />
+        <Clients />
+        <Solutions />
+        <Sectors />
+        <DevicesScents />
+        <SignatureScent />
+        <HowWeWork />
+        <WhyWestStory />
+        <OurWork />
+        <FAQ />
+
+        {/* <Features />
         <Categories />
         <Products />
         <Scents />
         <Locations />
         <BeforeAfter />
-        <Testimonials />
+        <Testimonials /> */}
         {/* <BestSellers /> */}
         <Contact />
       </main>

@@ -1,0 +1,348 @@
+```jsx
+import React, { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import {
+    Send,
+    Building2,
+    User,
+    Phone,
+    Mail,
+    MapPin,
+    BriefcaseBusiness,
+    Network,
+    Ruler,
+    AirVent,
+    ClipboardList,
+    MessageSquareText,
+} from "lucide-react";
+
+export default function Consultation() {
+    const { language, isRTL } = useLanguage();
+
+    const content = {
+        ar: {
+            badge: "طلب الاستشارة",
+            title: "لنبدأ باختيار الحل المناسب لمنشأتك",
+            description:
+                "شاركنا معلومات بسيطة عن منشأتك، وسيتواصل معك فريقنا لفهم احتياجك وترشيح الجهاز والرائحة والخدمة الأنسب.",
+            submit: "اطلب استشارة",
+            note:
+                "سيتم التواصل معك لمراجعة احتياج المنشأة واقتراح الخطوة المناسبة.",
+            placeholders: {
+                company: "اسم المنشأة",
+                name: "اسم المسؤول",
+                phone: "رقم الجوال",
+                email: "البريد الإلكتروني",
+                city: "المدينة",
+                activity: "نوع النشاط",
+                branches: "عدد الفروع",
+                area: "المساحة التقريبية",
+                hasDevices: "هل توجد أجهزة حاليًا؟",
+                service: "نوع الخدمة المطلوبة",
+                details: "تفاصيل إضافية",
+            },
+            options: {
+                hasDevices: ["نعم", "لا", "غير متأكد"],
+                services: [
+                    "خدمة التعطير الدورية",
+                    "شراء أجهزة التعطير",
+                    "توريد الزيوت العطرية",
+                    "تغيير الرائحة أو المورد الحالي",
+                    "تصميم رائحة خاصة",
+                ],
+            },
+        },
+
+        en: {
+            badge: "Consultation Request",
+            title: "Let’s Choose the Right Solution for Your Business",
+            description:
+                "Share simple information about your business, and our team will contact you to understand your needs and recommend the most suitable device, scent, and service.",
+            submit: "Request Consultation",
+            note:
+                "We will contact you to review your business needs and suggest the next suitable step.",
+            placeholders: {
+                company: "Business Name",
+                name: "Contact Person",
+                phone: "Mobile Number",
+                email: "Email Address",
+                city: "City",
+                activity: "Business Activity",
+                branches: "Number of Branches",
+                area: "Approximate Area",
+                hasDevices: "Do you currently have devices?",
+                service: "Required Service Type",
+                details: "Additional Details",
+            },
+            options: {
+                hasDevices: ["Yes", "No", "Not Sure"],
+                services: [
+                    "Recurring Scenting Service",
+                    "Buying Scent Diffusers",
+                    "Essential Oil Supply",
+                    "Replace Current Scent or Supplier",
+                    "Signature Scent Creation",
+                ],
+            },
+        },
+    };
+
+    const text = content[language] || content.en;
+
+    const [formData, setFormData] = useState({
+        company: "",
+        name: "",
+        phone: "",
+        email: "",
+        city: "",
+        activity: "",
+        branches: "",
+        area: "",
+        hasDevices: "",
+        service: "",
+        details: "",
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const message =
+            language === "ar"
+                ? `طلب استشارة جديد من موقع ويست ستوري:%0A
+اسم المنشأة: ${formData.company}%0A
+اسم المسؤول: ${formData.name}%0A
+رقم الجوال: ${formData.phone}%0A
+البريد الإلكتروني: ${formData.email}%0A
+المدينة: ${formData.city}%0A
+نوع النشاط: ${formData.activity}%0A
+عدد الفروع: ${formData.branches}%0A
+المساحة التقريبية: ${formData.area}%0A
+هل توجد أجهزة حاليًا؟ ${formData.hasDevices}%0A
+نوع الخدمة المطلوبة: ${formData.service}%0A
+تفاصيل إضافية: ${formData.details}`
+                : `New consultation request from West Story website:%0A
+Business Name: ${formData.company}%0A
+Contact Person: ${formData.name}%0A
+Mobile Number: ${formData.phone}%0A
+Email: ${formData.email}%0A
+City: ${formData.city}%0A
+Business Activity: ${formData.activity}%0A
+Number of Branches: ${formData.branches}%0A
+Approximate Area: ${formData.area}%0A
+Existing Devices: ${formData.hasDevices}%0A
+Required Service: ${formData.service}%0A
+Additional Details: ${formData.details}`;
+
+        window.open(`https://wa.me/966537229717?text=${message}`, "_blank");
+    };
+
+    const fields = [
+        { name: "company", icon: Building2, type: "text" },
+        { name: "name", icon: User, type: "text" },
+        { name: "phone", icon: Phone, type: "tel" },
+        { name: "email", icon: Mail, type: "email" },
+        { name: "city", icon: MapPin, type: "text" },
+        { name: "activity", icon: BriefcaseBusiness, type: "text" },
+        { name: "branches", icon: Network, type: "number" },
+        { name: "area", icon: Ruler, type: "text" },
+    ];
+
+    return (
+        <section
+            id="consultation"
+            dir={isRTL ? "rtl" : "ltr"}
+            className="relative py-24 bg-[#FBF7EF] overflow-hidden"
+        >
+            <div className="absolute top-0 left-0 w-[420px] h-[420px] bg-[#C0265C]/10 rounded-full blur-3xl -translate-x-1/3 -translate-y-1/3" />
+            <div className="absolute bottom-0 right-0 w-[520px] h-[520px] bg-white rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />
+
+            <div className="relative z-10 container mx-auto px-4">
+                <div className="grid lg:grid-cols-12 gap-10 items-start">
+                    <div className="lg:col-span-5 lg:sticky lg:top-28">
+                        <span className="inline-flex px-5 py-2 rounded-full bg-white text-[#C0265C] text-sm font-semibold shadow-sm mb-5">
+                            {text.badge}
+                        </span>
+
+                        <h2 className="text-4xl md:text-5xl font-bold text-[#191D2B] mb-6 leading-tight">
+                            {text.title}
+                        </h2>
+
+                        <p className="text-base md:text-lg text-[#191D2B]/65 leading-8 mb-8">
+                            {text.description}
+                        </p>
+
+                        <div className="rounded-[34px] bg-white border border-[#E9E4DC] p-7 shadow-[0_20px_60px_rgba(0,0,0,0.05)]">
+                            <div className="w-16 h-16 rounded-3xl bg-[#C0265C]/10 text-[#C0265C] flex items-center justify-center mb-5">
+                                <ClipboardList size={30} />
+                            </div>
+
+                            <h3 className="text-2xl font-bold text-[#191D2B] mb-3">
+                                {language === "ar"
+                                    ? "ماذا يحدث بعد الإرسال؟"
+                                    : "What happens after sending?"}
+                            </h3>
+
+                            <p className="text-[#191D2B]/65 leading-8">
+                                {text.note}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="lg:col-span-7">
+                        <form
+                            onSubmit={handleSubmit}
+                            className="rounded-[40px] bg-white border border-[#E9E4DC] p-6 md:p-8 shadow-[0_25px_80px_rgba(0,0,0,0.07)]"
+                        >
+                            <div className="grid md:grid-cols-2 gap-4">
+                                {fields.map((field) => {
+                                    const Icon = field.icon;
+
+                                    return (
+                                        <div
+                                            key={field.name}
+                                            className="relative"
+                                        >
+                                            <Icon
+                                                size={19}
+                                                className={`absolute top-1/2 -translate-y-1/2 text-[#C0265C] ${
+                                                    isRTL ? "right-4" : "left-4"
+                                                }`}
+                                            />
+
+                                            <input
+                                                type={field.type}
+                                                name={field.name}
+                                                value={formData[field.name]}
+                                                onChange={handleChange}
+                                                placeholder={
+                                                    text.placeholders[
+                                                        field.name
+                                                    ]
+                                                }
+                                                className={`w-full h-14 rounded-2xl bg-[#FBF7EF] border border-[#E9E4DC] outline-none focus:border-[#C0265C]/50 text-[#191D2B] placeholder:text-[#191D2B]/45 ${
+                                                    isRTL
+                                                        ? "pr-12 pl-4"
+                                                        : "pl-12 pr-4"
+                                                }`}
+                                            />
+                                        </div>
+                                    );
+                                })}
+
+                                <div className="relative">
+                                    <AirVent
+                                        size={19}
+                                        className={`absolute top-1/2 -translate-y-1/2 text-[#C0265C] ${
+                                            isRTL ? "right-4" : "left-4"
+                                        }`}
+                                    />
+
+                                    <select
+                                        name="hasDevices"
+                                        value={formData.hasDevices}
+                                        onChange={handleChange}
+                                        className={`w-full h-14 rounded-2xl bg-[#FBF7EF] border border-[#E9E4DC] outline-none focus:border-[#C0265C]/50 text-[#191D2B] ${
+                                            isRTL
+                                                ? "pr-12 pl-4"
+                                                : "pl-12 pr-4"
+                                        }`}
+                                    >
+                                        <option value="">
+                                            {text.placeholders.hasDevices}
+                                        </option>
+                                        {text.options.hasDevices.map(
+                                            (option) => (
+                                                <option
+                                                    key={option}
+                                                    value={option}
+                                                >
+                                                    {option}
+                                                </option>
+                                            )
+                                        )}
+                                    </select>
+                                </div>
+
+                                <div className="relative">
+                                    <ClipboardList
+                                        size={19}
+                                        className={`absolute top-1/2 -translate-y-1/2 text-[#C0265C] ${
+                                            isRTL ? "right-4" : "left-4"
+                                        }`}
+                                    />
+
+                                    <select
+                                        name="service"
+                                        value={formData.service}
+                                        onChange={handleChange}
+                                        className={`w-full h-14 rounded-2xl bg-[#FBF7EF] border border-[#E9E4DC] outline-none focus:border-[#C0265C]/50 text-[#191D2B] ${
+                                            isRTL
+                                                ? "pr-12 pl-4"
+                                                : "pl-12 pr-4"
+                                        }`}
+                                    >
+                                        <option value="">
+                                            {text.placeholders.service}
+                                        </option>
+                                        {text.options.services.map((option) => (
+                                            <option
+                                                key={option}
+                                                value={option}
+                                            >
+                                                {option}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div className="relative mt-4">
+                                <MessageSquareText
+                                    size={19}
+                                    className={`absolute top-5 text-[#C0265C] ${
+                                        isRTL ? "right-4" : "left-4"
+                                    }`}
+                                />
+
+                                <textarea
+                                    name="details"
+                                    value={formData.details}
+                                    onChange={handleChange}
+                                    placeholder={text.placeholders.details}
+                                    rows="5"
+                                    className={`w-full rounded-2xl bg-[#FBF7EF] border border-[#E9E4DC] outline-none focus:border-[#C0265C]/50 text-[#191D2B] placeholder:text-[#191D2B]/45 resize-none py-4 ${
+                                        isRTL
+                                            ? "pr-12 pl-4"
+                                            : "pl-12 pr-4"
+                                    }`}
+                                />
+                            </div>
+
+                            <button
+                                type="submit"
+                                className="mt-6 w-full h-14 rounded-full bg-[#C0265C] text-white font-semibold flex items-center justify-center gap-3 shadow-[0_15px_35px_rgba(192,38,92,0.25)] hover:bg-[#191D2B] transition-all duration-300"
+                            >
+                                {text.submit}
+                                <Send size={18} />
+                            </button>
+
+                            <p className="text-center text-sm text-[#191D2B]/55 leading-7 mt-5">
+                                {text.note}
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}
+```

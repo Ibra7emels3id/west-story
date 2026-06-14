@@ -1,18 +1,49 @@
+
 import React, { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Menu, X, Globe, Search } from "lucide-react";
 import logo from "../../public/Images/logo_west_story.png";
 
 export default function Header() {
-    const { language, setLanguage, t, isRTL } = useLanguage();
+    const { language, setLanguage, isRTL } = useLanguage();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const navItems = [
-        { key: "nav.diffusers", href: "#diffusers" },
-        { key: "nav.oils", href: "#oils" },
-        { key: "nav.fresheners", href: "#fresheners" },
-        { key: "nav.special", href: "#special" },
-        { key: "nav.business", href: "#business" },
+        {
+            labelAr: "الرئيسية",
+            labelEn: "Home",
+            href: "#home",
+        },
+        {
+            labelAr: "حلولنا",
+            labelEn: "Solutions",
+            href: "#solutions",
+        },
+        {
+            labelAr: "القطاعات",
+            labelEn: "Sectors",
+            href: "#sectors",
+        },
+        {
+            labelAr: "الأجهزة والروائح",
+            labelEn: "Devices & Scents",
+            href: "#devices",
+        },
+        {
+            labelAr: "الرائحة الخاصة",
+            labelEn: "Signature Scent",
+            href: "#signature",
+        },
+        {
+            labelAr: "أعمالنا",
+            labelEn: "Our Work",
+            href: "#work",
+        },
+        {
+            labelAr: "من نحن",
+            labelEn: "About Us",
+            href: "#about",
+        },
     ];
 
     return (
@@ -28,7 +59,7 @@ export default function Header() {
                             <img
                                 src={logo}
                                 alt="West Story Logo"
-                                className="h-16 xl:h-20 object-contain"
+                                className="h-8 xl:h-8 object-contain"
                             />
                         </a>
 
@@ -36,11 +67,13 @@ export default function Header() {
                         <nav className="hidden lg:flex items-center justify-center gap-7 flex-1">
                             {navItems.map((item) => (
                                 <a
-                                    key={item.key}
+                                    key={item.href}
                                     href={item.href}
-                                    className="relative py-2 text-[15px] font-normal tracking-wide text-[#191D2B]/75 hover:text-[#C0265C] transition-all duration-300 after:absolute after:left-1/2 after:-bottom-1 after:h-[2px] after:w-0 after:bg-[#C0265C] after:transition-all after:duration-300 hover:after:w-full hover:after:left-0"
+                                    className="relative py-2 text-[15px] font-medium tracking-wide text-[#191D2B]/75 hover:text-[#C0265C] transition-all duration-300 after:absolute after:left-1/2 after:-bottom-1 after:h-[2px] after:w-0 after:bg-[#C0265C] after:transition-all after:duration-300 hover:after:w-full hover:after:left-0"
                                 >
-                                    {t(item.key)}
+                                    {language === "ar"
+                                        ? item.labelAr
+                                        : item.labelEn}
                                 </a>
                             ))}
                         </nav>
@@ -54,6 +87,7 @@ export default function Header() {
                                 <Search size={18} />
                             </button>
 
+                            {/* Language Switcher */}
                             <div className="relative group">
                                 <button
                                     type="button"
@@ -93,19 +127,27 @@ export default function Header() {
                                 </div>
                             </div>
 
+                            {/* CTA */}
                             <a
-                                href="#business"
+                                href="#consultation"
                                 className="hidden md:inline-flex h-11 items-center justify-center rounded-full bg-[#C0265C] px-6 text-sm font-medium text-white shadow-[0_10px_25px_rgba(192,38,92,0.25)] hover:bg-[#191D2B] hover:-translate-y-0.5 transition-all duration-300"
                             >
-                                {language === "ar" ? "تواصل معنا" : "Contact Us"}
+                                {language === "ar"
+                                    ? "اطلب استشارة"
+                                    : "Request Consultation"}
                             </a>
 
+                            {/* Mobile Menu Button */}
                             <button
                                 type="button"
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                                 className="lg:hidden w-11 h-11 rounded-full bg-[#191D2B] text-white flex items-center justify-center shadow-md"
                             >
-                                {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+                                {isMenuOpen ? (
+                                    <X size={22} />
+                                ) : (
+                                    <Menu size={22} />
+                                )}
                             </button>
                         </div>
                     </div>
@@ -118,28 +160,30 @@ export default function Header() {
                         <nav className="rounded-3xl bg-white border border-black/5 shadow-xl p-3">
                             {navItems.map((item) => (
                                 <a
-                                    key={item.key}
+                                    key={item.href}
                                     href={item.href}
                                     onClick={() => setIsMenuOpen(false)}
-                                    className="block px-5 py-4 rounded-2xl text-[#191D2B]/80 text-sm font-normal hover:bg-[#FBF7EF] hover:text-[#C0265C] transition"
+                                    className="block px-5 py-4 rounded-2xl text-[#191D2B]/80 text-sm font-medium hover:bg-[#FBF7EF] hover:text-[#C0265C] transition"
                                 >
-                                    {t(item.key)}
+                                    {language === "ar"
+                                        ? item.labelAr
+                                        : item.labelEn}
                                 </a>
                             ))}
 
                             <a
-                                href="#business"
+                                href="#consultation"
                                 onClick={() => setIsMenuOpen(false)}
                                 className="mt-3 flex items-center justify-center rounded-2xl bg-[#C0265C] px-5 py-4 text-white text-sm font-medium hover:bg-[#191D2B] transition"
                             >
-                                {language === "ar" ? "تواصل معنا" : "Contact Us"}
+                                {language === "ar"
+                                    ? "اطلب استشارة"
+                                    : "Request Consultation"}
                             </a>
                         </nav>
                     </div>
                 </div>
             </header>
-
-            <div className="h-20" />
         </>
     );
 }
