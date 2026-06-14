@@ -11,10 +11,10 @@ const heroImages = {
             "/Images/banner_hero/4 A.png",
         ],
         mobile: [
-            "/public/Images/01.jpg",
-            "/public/Images/A1.jpg",
-            "/public/Images/D1.jpg",
-            "/public/Images/DO1.jpg",
+            "/Images/01.jpg",
+            "/Images/A1.jpg",
+            "/Images/D1.jpg",
+            "/Images/DO1.jpg",
         ],
     },
 
@@ -26,10 +26,10 @@ const heroImages = {
             "/Images/banner_hero/4 E.png",
         ],
         mobile: [
-            "/public/Images/01.jpg",
-            "/public/Images/A1.jpg",
-            "/public/Images/D1.jpg",
-            "/public/Images/DO1.jpg",
+            "/Images/01.jpg",
+            "/Images/A1.jpg",
+            "/Images/D1.jpg",
+            "/Images/DO1.jpg",
         ],
     },
 };
